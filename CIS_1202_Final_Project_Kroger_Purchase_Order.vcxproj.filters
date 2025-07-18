@@ -18,5 +18,8 @@
     <ClCompile Include="krogerPORender.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="segments.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
