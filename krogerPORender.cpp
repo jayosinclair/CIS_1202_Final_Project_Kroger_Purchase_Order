@@ -15,10 +15,54 @@
 #include <iostream>
 #include <cctype>
 #include <string>
-#include "segments.h"
+#include "element.h"
 using namespace std;
 
 int main() {
+
+	//Perhaps read all this in from a file. It's quite cumbersome here...
+
+	/*
+	
+		void setRef(string refVal)
+		{ ref = refVal; }
+
+		void setMinChars(int minimumChars)
+		{ minChars = minimumChars; }
+
+		void setMaxChars(int maximumChars)
+		{ maxChars = maximumChars; }
+
+		void setFieldLabel(string fieldDesc)
+		{ fieldLabel = fieldDesc; }
+
+		void setLocation(docLocation loc)
+		{ location = loc; }
+
+		void setPosition(int poss)
+		{ position = poss; }
+
+		void setLoopID(int idLoop)
+		{ loopID = idLoop; }
+
+		void setMustUse(bool required)
+		{ mustUse = required; }
+
+	
+	*/
+
+	Element segmentST01;
+	segmentST01.setRef("ST01");
+	segmentST01.setMinChars(3);
+	segmentST01.setMaxChars(3);
+	segmentST01.setFieldLabel("Transaction Set Number");
+	segmentST01.setLocation(HEADING);
+	segmentST01.setPosition(0);
+	segmentST01.setLoopID(0);
+	segmentST01.setMustUse(true);
+
+	cout << segmentST01.getRef() << endl;
+	cout << segmentST01.getFieldLabel() << endl;
 
 
 

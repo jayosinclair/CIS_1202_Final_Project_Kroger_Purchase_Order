@@ -1,5 +1,5 @@
-#ifndef SEGMENTS.H
-#define SEGMENTS.H
+#ifndef ELEMENT_H
+#define ELEMENT_H
 
 #include <string>
 using namespace std;
@@ -8,9 +8,15 @@ enum docLocation { UNDEFINED, HEADING, DETAIL };
 
 class Element {
 
+	const int INT_UNDEFINED = 9999999;
+	const string STR_UNDEFINED = "UNDEFINED";
+	const double DBL_UNDEFINED = 9999999.0;
+
+
 	private:
 
 		string ref;
+
 		int minChars;
 		int maxChars;
 		string fieldLabel;
@@ -18,6 +24,9 @@ class Element {
 		int position;
 		int loopID;
 		bool mustUse;
+		int intValue;
+		string strValue;
+		double dblValue;
 
 	public:
 
@@ -33,10 +42,13 @@ class Element {
 			position = -1;
 			loopID = -1;
 			mustUse = false;
+			intValue = INT_UNDEFINED;
+			strValue = STR_UNDEFINED;
+			dblValue = DBL_UNDEFINED;
 
 		}
 
-		Element(string reference, int minimumChars, int maximumChars, string fieldDesc, docLocation loc, int poss, int idloop, bool required) {
+		Element(string reference, int minimumChars, int maximumChars, string fieldDesc, docLocation loc, int poss, int idloop, bool required, int intVal, string strVal, double dblVal) {
 
 			ref = reference;
 			minChars = minimumChars;
@@ -46,12 +58,15 @@ class Element {
 			position = poss;
 			loopID = idloop;
 			mustUse = required;
+			intValue = intVal;
+			strValue = strVal;
+			dblValue = dblVal;
 
 		}
 
 		//Mutators
 
-		void setRef(string refVal)
+		void setRef(string refVal)				//These are all so short that I didn't break them into a separate cpp implementation file.
 		{ ref = refVal; }
 
 		void setMinChars(int minimumChars)
@@ -75,32 +90,56 @@ class Element {
 		void setMustUse(bool required)
 		{ mustUse = required; }
 
+		void setIntValue(int intVal)
+		{
+			intValue = intVal;
+		}
+
+		void setDblValue(double dblVal)
+		{
+			dblValue = dblVal;
+		}
+
+		void setStrValue(string strVal)
+		{
+			strValue = strVal;
+		}
+
 
 		//Accessors
 
-		string setRef(string refVal) const
+		string getRef() const
 		{ return ref; }
 
-		int setMinChars(int minimumChars) const
+		int getMinChars() const
 		{ return minChars; }
 
-		int setMaxChars(int maximumChars) const
+		int getMaxChars() const
 		{ return maxChars; }
 
-		string setFieldLabel(string fieldDesc) const
+		string getFieldLabel() const
 		{ return fieldLabel; }
 
-		docLocation setLocation(docLocation loc) const
+		docLocation getLocation() const
 		{ return location; }
 
-		int setPosition(int poss) const
+		int getPosition() const
 		{ return position; }
 
-		int setLoopID(int idLoop) const
+		int getLoopID() const
 		{ return loopID; }
 
-		bool setMustUse(bool required) const
+		bool getMustUse() const
 		{ return mustUse; }
+
+		int getIntValue() const
+		{ return intValue; }
+
+		double getDblValue() const
+		{ return dblValue; }
+
+		string getStrValue() const
+		{ return strValue; }
 
 };
 
