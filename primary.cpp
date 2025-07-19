@@ -13,34 +13,51 @@
 //See the readme file on GitHub repository for this project for some EDI basics as they apply to this project.
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <cctype>
 #include <string>
 #include "SegmentLine.h"
 #include "Element.h"
 using namespace std;
 
+int getNumLines();
+
 int main() {
 
-	//Driver for now...
+	int numSegmentLines = 0;
+	char retry = 'Y';
 
-	SegmentLine seg;
-	seg.setSegmentID("ST");
 
-	Element e01;
-	e01.setSegmentID("ST");
-	e01.setElementNum("01");
-	e01.setMinChars(3);
-	e01.setMaxChars(3);
-	e01.setFieldLabel("Transaction Set Number");
-	e01.setLocation(HEADING);
-	e01.setPosition(0);
-	e01.setLoopID(0);
-	e01.setMustUse(true);
+	while (retry == 'Y') {
 
-	cout << e01.getSegmentID() << e01.getElementNum() << endl;
-	cout << "Min chars: " << e01.getMinChars() << endl;
-	cout << "Max chars: " << e01.getMaxChars() << endl;
-	cout << "Field: " << e01.getFieldLabel() << endl;
+		try {
+
+			numSegmentLines = getNumLines();
+			retry = 'N';
+
+		}
+
+		catch (string fileNotFoundMsg) { //Handle exception by allowing user to check the file name/placement and try again without quitting the program.
+
+			cout << fileNotFoundMsg;
+
+			cout << "Try again? (Y/N): ";
+			cin.get(retry);
+			retry = toupper(retry);
+			cin.ignore();
+
+			if (retry != 'Y') {
+
+				cout << "Please check the file name and placement before re-running the program." << endl << endl;
+				return 0;
+			}
+
+		}
+
+	}
+
+	cout << "Number of lines: " << numSegmentLines << endl;
 
 
 	cout << endl << endl;
@@ -48,3 +65,68 @@ int main() {
 	return 0;
 
 }
+
+
+//******************************************************************************************************************************
+//
+//Function getNumLines preprocesses the EDI inputFile object to count the number of lines present.
+//
+//******************************************************************************************************************************
+
+int getNumLines() {
+
+	string bufferStr;
+	int numLines = 0;
+	string fileNotFound = "Error! Please be sure \"Kroger_EDI850_PurchaseOrder.txt\" is placed in the directory.\n\n";
+
+	ifstream inputFile; //inputFile object has many rows, each aligning to a "segment."
+
+	inputFile.open("Kroger_EDI850_PurchaseOrder.txt");
+
+	if (!inputFile) {
+		
+		throw fileNotFound; //An exception is thrown here, making it so the entire program isn't nuked without giving some grace to try again in an associated catch.
+
+	}
+
+	while (getline(inputFile, bufferStr)) {
+
+		numLines++;
+
+	}
+
+	inputFile.close();
+
+	return numLines;
+
+}
+
+
+
+
+
+
+
+/*
+
+SegmentLine seg;
+seg.setSegmentID("ST");
+
+Element e01;
+e01.setSegmentID("ST");
+e01.setElementNum("01");
+e01.setMinChars(3);
+e01.setMaxChars(3);
+e01.setFieldLabel("Transaction Set Number");
+e01.setLocation(HEADING);
+e01.setPosition(0);
+e01.setLoopID(0);
+e01.setMustUse(true);
+
+cout << e01.getSegmentID() << e01.getElementNum() << endl;
+cout << "Min chars: " << e01.getMinChars() << endl;
+cout << "Max chars: " << e01.getMaxChars() << endl;
+cout << "Field: " << e01.getFieldLabel() << endl;
+
+
+*/

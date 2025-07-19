@@ -108,5 +108,4 @@ class Element : public SegmentLine {
 
 };
 
-
 #endif
