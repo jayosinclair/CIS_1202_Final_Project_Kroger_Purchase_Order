@@ -2,21 +2,20 @@
 #define ELEMENT_H
 
 #include <string>
+#include "SegmentLine.h"
 using namespace std;
 
 enum docLocation { UNDEFINED, HEADING, DETAIL };
 
-class Element {
+class Element : public SegmentLine {
 
 	const int INT_UNDEFINED = 9999999;
 	const string STR_UNDEFINED = "UNDEFINED";
 	const double DBL_UNDEFINED = 9999999.0;
 
-
 	private:
 
-		string ref;
-
+		string elementNum;
 		int minChars;
 		int maxChars;
 		string fieldLabel;
@@ -30,44 +29,16 @@ class Element {
 
 	public:
 
-		//Default Constructor.
+		Element(); //See element.cpp for definition
 
-		Element() {
-		
-			ref = "";
-			minChars = 0;
-			maxChars = 0;
-			fieldLabel = "";
-			location = UNDEFINED;
-			position = -1;
-			loopID = -1;
-			mustUse = false;
-			intValue = INT_UNDEFINED;
-			strValue = STR_UNDEFINED;
-			dblValue = DBL_UNDEFINED;
+		Element(string elem, int minimumChars, int maximumChars, string fieldDesc, docLocation loc, int poss, int idloop, bool required, int intVal, string strVal, double dblVal);
 
-		}
-
-		Element(string reference, int minimumChars, int maximumChars, string fieldDesc, docLocation loc, int poss, int idloop, bool required, int intVal, string strVal, double dblVal) {
-
-			ref = reference;
-			minChars = minimumChars;
-			maxChars = maximumChars;
-			fieldLabel = fieldDesc;
-			location = loc;
-			position = poss;
-			loopID = idloop;
-			mustUse = required;
-			intValue = intVal;
-			strValue = strVal;
-			dblValue = dblVal;
-
-		}
+		~Element(){ }
 
 		//Mutators
 
-		void setRef(string refVal)				//These are all so short that I didn't break them into a separate cpp implementation file.
-		{ ref = refVal; }
+		void setElementNum(string elem)
+		{ elementNum = elem; }
 
 		void setMinChars(int minimumChars)
 		{ minChars = minimumChars; }
@@ -91,25 +62,19 @@ class Element {
 		{ mustUse = required; }
 
 		void setIntValue(int intVal)
-		{
-			intValue = intVal;
-		}
+		{ intValue = intVal; }
 
 		void setDblValue(double dblVal)
-		{
-			dblValue = dblVal;
-		}
+		{ dblValue = dblVal; }
 
 		void setStrValue(string strVal)
-		{
-			strValue = strVal;
-		}
+		{ strValue = strVal; }
 
 
 		//Accessors
 
-		string getRef() const
-		{ return ref; }
+		string getElementNum() const
+		{ return elementNum; }
 
 		int getMinChars() const
 		{ return minChars; }

@@ -15,10 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="krogerPORender.cpp">
+    <ClCompile Include="primary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="element.h">
+    <ClCompile Include="Element.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Element.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SegmentLine.h">
       <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>

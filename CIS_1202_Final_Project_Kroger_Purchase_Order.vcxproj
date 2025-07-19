@@ -123,8 +123,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="krogerPORender.cpp" />
-    <ClCompile Include="element.h" />
+    <ClCompile Include="Element.cpp" />
+    <ClCompile Include="primary.cpp" />
+    <ClCompile Include="Element.h" />
+    <ClCompile Include="SegmentLine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
