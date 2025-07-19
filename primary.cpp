@@ -21,19 +21,41 @@
 #include "Element.h"
 using namespace std;
 
+void preProcessEdiFile(int*);
 int getNumLines();
+void tokenizeSegmentLine(int*);
 
 int main() {
 
-	int numSegmentLines = 0;
-	char retry = 'Y';
+	int numSegmentLines; //Set up to demonstrate mechanics of making a pointer for the number of segment lines.
+	int* numSegmentLinesPtr = &numSegmentLines;
+	*numSegmentLinesPtr = 0;
 
+	preProcessEdiFile(numSegmentLinesPtr);
+
+
+	cout << endl << endl;
+	system("pause");
+	return 0;
+
+}
+
+
+//******************************************************************************************************************************
+//
+//Function readEdiFile calls functions needed to figure out how many rows/lines exist in the file.
+//
+//******************************************************************************************************************************
+
+void preProcessEdiFile(int *numSegmentLinesPtr) {
+
+	char retry = 'Y';
 
 	while (retry == 'Y') {
 
 		try {
 
-			numSegmentLines = getNumLines();
+			*numSegmentLinesPtr = getNumLines();
 			retry = 'N';
 
 		}
@@ -50,21 +72,19 @@ int main() {
 			if (retry != 'Y') {
 
 				cout << "Please check the file name and placement before re-running the program." << endl << endl;
-				return 0;
+				exit(EXIT_SUCCESS);
 			}
 
 		}
 
 	}
 
-	cout << "Number of lines: " << numSegmentLines << endl;
+	cout << "Number of lines: " << *numSegmentLinesPtr << endl;
 
-
-	cout << endl << endl;
-	system("pause");
-	return 0;
+	tokenizeSegmentLine(numSegmentLinesPtr);
 
 }
+
 
 
 //******************************************************************************************************************************
@@ -102,6 +122,52 @@ int getNumLines() {
 }
 
 
+void tokenizeSegmentLine(int* numSegmentLinesPtr) {
+
+	int lineCounter = 0;
+	int rowDelimiterCounter = 0;
+	string wholeLine; //Read in entire line before processing it.
+	string segmentID; //Will need to store every token as a string before casting it to a correct data type later.
+	string tempToken;
+	
+	string fileNotFound = "Error! Please be sure \"Kroger_EDI850_PurchaseOrder.txt\" is placed in the directory.\n\n"; //We already did this, but just to be safe...
+
+	ifstream inputFile;
+
+	inputFile.open("Kroger_EDI850_PurchaseOrder.txt");
+
+	while (getline(inputFile, wholeLine) && lineCounter < *numSegmentLinesPtr) {
+
+		rowDelimiterCounter = 0; //Reset delimiter counter
+
+		if (!inputFile) {
+
+			throw fileNotFound; //An exception is thrown here, making it so the entire program isn't nuked without giving some grace to try again in an associated catch.
+
+			//TODO: This throw statement needs to be tied to a try/catch correctly.
+
+		}
+
+		stringstream stringObject(wholeLine); //String stream object used in reading entire line as a string before parsing it.
+
+		getline(stringObject, segmentID, '*');
+		cout << segmentID << " "; //TODO: segmentIDs can be fed into a dynamic array and be copied into another array as names of objects carrying other data?
+
+		//TODO: Need to figure out how many elements are in the file for each segmentID.
+
+		while (getline(stringObject, tempToken, '*')) {
+
+			rowDelimiterCounter++;
+
+		}
+
+		cout << rowDelimiterCounter++ << endl;
+
+
+	}
+
+
+}
 
 
 
